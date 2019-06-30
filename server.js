@@ -4,6 +4,8 @@ const multer = require('multer');
 const fileType = require('file-type');
 
 const app = express();
+
+/* CONFIG ACCEPTED EXTENSIONS */
 const accepted_extensions = ['jpg', 'png', 'gif'];
 
 app.use(express.static('public'));
@@ -47,13 +49,13 @@ app.get('/', (req, res) => {
 // Upload post route
 app.post('/upload', upload.single('image'), validate_format, (req, res, next) => {
   let upFile = req.files.image;
-  let id = req.files.image.md5
+  let mime = fileType(req.files.image.data);
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`public/upload/${id}.jpg`, (err) => {
+  upFile.mv(`public/upload/${upFile.md5}.${mime.ext}`, (err) => {
     if (err)
       return res.status(500).send(err);
-    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/upload/${id}.jpg"><img src="/upload/${id}.jpg"><br>Make sure to copy and share the link!</a>`;
+    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/upload/${upFile.md5}.${mime.ext}"><img src="/upload/${upFile.md5}.${mime.ext}"><br>Make sure to copy and share the link!</a>`;
     res.send(html);
   });
 });
