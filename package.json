@@ -10,7 +10,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "crypto-random-string": "^3.0.1",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.5"
   },

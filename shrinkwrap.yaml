@@ -1,5 +1,4 @@
 dependencies:
-  crypto-random-string: 3.0.1
   express: 4.16.4
   express-fileupload: 1.1.5
 packages:
@@ -74,14 +73,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
-  /crypto-random-string/3.0.1:
-    dependencies:
-      type-fest: 0.5.2
-    dev: false
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-dUL0cJ4PBLanJGJQBHQUkvZ3C4q13MXzl54oRqAIiJGiNkOZ4JDwkg/SBo7daGghzlJv16yW1p/4lIQukmbedA==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -404,12 +395,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=
-  /type-fest/0.5.2:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-DWkS49EQKVX//Tbupb9TFa19c7+MK1XmzkrZUR8TAktmE/DizXoaoJV6TZ/tSIPXipqNiRI6CyAe7x69Jb6RSw==
   /type-is/1.6.16:
     dependencies:
       media-typer: 0.3.0
@@ -441,6 +426,5 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  crypto-random-string: ^3.0.1
   express: ^4.16.4
   express-fileupload: ^1.1.5
