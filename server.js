@@ -15,15 +15,17 @@ app.post('/upload', (req, res) => {
     return res.status(400).send('No files were uploaded.');
   }
 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.image;
-
+  let upFile = req.files.image;
+  
+  // Make a random name for the file
+  let id = cryptoRandomString({length: 10});
+  
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('public/upload/filename.jpg', (err) => {
+  upFile.mv(`public/upload/${id}.jpg`, (err) => {
     if (err)
       return res.status(500).send(err);
-
-    res.send('File uploaded!');
+    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/upload/${id}.jpg"><img src="/upload/${id}.jpg"><br>Make sure to copy and share the link!</a>`;
+    res.send(html);
   });
 });
 
