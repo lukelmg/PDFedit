@@ -1,6 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
-const cryptoRandomString = require('crypto-random-string');
+const randomString = require('crypto-random-string');
 const app = express();
 
 app.use(express.static('public'));
@@ -18,7 +18,7 @@ app.post('/upload', (req, res) => {
   let upFile = req.files.image;
   
   // Make a random name for the file
-  let id = cryptoRandomString({length: 10});
+  let id = randomString({length: 10});
   
   // Use the mv() method to place the file somewhere on your server
   upFile.mv(`public/upload/${id}.jpg`, (err) => {

@@ -1,5 +1,5 @@
 {
-  "//1": "Upload an image, gives ",
+  "//1": "The user upload an image, the server gives a random name, upload it and give it back to the user",
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
   "name": "glitch-image-hosting",
