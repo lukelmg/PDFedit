@@ -17,7 +17,6 @@ app.post('/upload', (req, res) => {
   let upFile = req.files.image;
   console.log(req.files.image.md5);
   
-  // Make a random name for the file
   let id = req.files.image.md5
   
   // Use the mv() method to place the file somewhere on your server
