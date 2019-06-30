@@ -1,10 +1,10 @@
 {
-  "//1": "describes your app and its dependencies",
+  "//1": "Upload an image, gives ",
   "//2": "https://docs.npmjs.com/files/package.json",
   "//3": "updating this file will download and update your packages",
-  "name": "hello-express",
+  "name": "glitch-image-hosting",
   "version": "0.0.1",
-  "description": "A simple Node app built on Express, instantly up and running.",
+  "description": "A simple image-hosting app for glitch",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -18,12 +18,14 @@
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
+    "url": "https://glitch.com/~glitch-image-hosting"
   },
   "license": "MIT",
   "keywords": [
     "node",
     "glitch",
-    "express"
+    "express",
+    "image hosting",
+    "image"
   ]
 }

@@ -1,25 +1,13 @@
 Image hosting in glitch
 =================
 
+I made this code to make an example of how to make a image hosting in glitch for this support question: [Image Hosting in Glitch](https://support.glitch.com/t/image-hosting-in-glitch/12188).
 
-
-Find out more [Image Hosting in Glitch](https://support.glitch.com/t/image-hosting-in-glitch/12188).
-
-
-Your Project
+Glitch restrictions
 ------------
-
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+- Projects have a limit of 200MB of disk space in the container. The contents of your project's '/tmp' directory don't count towards that total, but those files are removed when the project restarts. By default your Node.js modules don't count towards that total - there's a separate 1GB limit for nNode modules. Plus, there's an additional 512MB of assets storage space.
+- Projects are limited to 4000 requests per hour (subsequent requests will return a 429 "Too Many Requests" response).
+- [read more...](https://glitch.com/help/restrictions/)
 
 
-Made by [Glitch](https://glitch.com/)
--------------------
-
-\ ゜o゜)ノ
+Author: [ElBort](https://glitch.com/@ElBort)
