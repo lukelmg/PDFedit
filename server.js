@@ -33,7 +33,7 @@ function validate_format(req, res, next) {
   if (!req.files) {
       return res.status(400).send('No files were uploaded.');
   };
-  
+
   // Image/mime validation
   let mime = fileType(req.files.image.data);
   if(!mime || !accepted_extensions.includes(mime.ext))
