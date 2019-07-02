@@ -5,11 +5,15 @@ const fileType = require('file-type');
 
 const app = express();
 
-/* CONFIG ACCEPTED EXTENSIONS */
+/* CONFIG */
 const accepted_extensions = ['jpg', 'png', 'gif'];
+const upload_folder = 'tmp';
 
 app.use(express.static('public'));
-app.use(fileUpload());
+app.use('/uploaded', express.static(upload_folder));
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 const upload = multer({
   limits: { 
@@ -52,10 +56,10 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   let mime = fileType(req.files.image.data);
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`public/upload/${upFile.md5}.${mime.ext}`, (err) => {
+  upFile.mv(`${upload_folder}/${upFile.md5}.${mime.ext}`, (err) => {
     if (err)
       return res.status(500).send(err);
-    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/upload/${upFile.md5}.${mime.ext}"><img src="/upload/${upFile.md5}.${mime.ext}"><br>Make sure to copy and share the link!</a>`;
+    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/${upFile.md5}.${mime.ext}"><img src="/uploaded/${upFile.md5}.${mime.ext}"><br>Make sure to copy and share the link!</a>`;
     res.send(html);
   });
 });
