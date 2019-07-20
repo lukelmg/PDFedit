@@ -46,7 +46,7 @@ function validate_format(req, res, next) {
 }
 
 // Index get route
-app.get('/index', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
