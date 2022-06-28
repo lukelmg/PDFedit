@@ -6,42 +6,54 @@
   </head>
 
   <body>
-    <p>Click the button to create a new PDF document with <code>pdf-lib</code></p>
-    <button onclick="createPdf()">Create PDF</button>
+    <form>
+        <input type="file" id="myFile" name="filename">
+        <input type="submit">
+    </form>
+
+    <p>Click the button to modify an existing PDF document with <code>pdf-lib</code></p>
+    <button onclick="modifyPdf()">Modify PDF</button>
     <p class="small">(Your browser will download the resulting file)</p>
   </body>
 
   <script>
-    const { PDFDocument, StandardFonts, rgb } = PDFLib
+    const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
 
-    async function createPdf() {
-      // Create a new PDFDocument
-      const pdfDoc = await PDFDocument.create()
+    async function modifyPdf() {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      // Fetch an existing PDF document
+      const url = 'file:///C:/Users/lukeg/Downloads/' + urlParams.get('filename')
+  	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
-      // Embed the Times Roman font
-      const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman)
+      // Load a PDFDocument from the existing PDF bytes
+      const pdfDoc = await PDFDocument.load(existingPdfBytes)
 
-      // Add a blank page to the document
-      const page = pdfDoc.addPage()
+      // Embed the Helvetica font
+      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
 
-      // Get the width and height of the page
-      const { width, height } = page.getSize()
+      // Get the first page of the document
+      const pages = pdfDoc.getPages()
+      const firstPage = pages[0]
 
-      // Draw a string of text toward the top of the page
-      const fontSize = 30
-      page.drawText('Creating PDFs in JavaScript is awesome!', {
-        x: 50,
-        y: height - 4 * fontSize,
-        size: fontSize,
-        font: timesRomanFont,
-        color: rgb(0, 0.53, 0.71),
+      // Get the width and height of the first page
+      const { width, height } = firstPage.getSize()
+
+      // Draw a string of text diagonally across the first page
+      firstPage.drawText('This text was added with JavaScript!', {
+        x: 5,
+        y: height / 2 + 300,
+        size: 50,
+        font: helveticaFont,
+        color: rgb(0.95, 0.1, 0.1),
+        rotate: degrees(-45),
       })
 
       // Serialize the PDFDocument to bytes (a Uint8Array)
       const pdfBytes = await pdfDoc.save()
 
 			// Trigger the browser to download the PDF document
-      download(pdfBytes, "pdf-lib_creation_example.pdf", "application/pdf");
+      download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
     }
   </script>
 </html>
