@@ -1,6 +1,23 @@
 {
-  "dependencies": {
-    "pdf-lib": "^1.17.1"
+  "name": "pdfedit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukelmg/PDFedit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukelmg/PDFedit/issues"
+  },
+  "homepage": "https://github.com/lukelmg/PDFedit#readme",
+  "dependencies": {
+    "hummus": "^1.0.110",
+    "lodash": "^4.17.21"
+  }
 }
