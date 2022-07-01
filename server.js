@@ -57,14 +57,23 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   let upFile = req.files.image;
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`${upload_folder}/current.pdf`, (err) => {
+  upFile.mv(`current.pdf`, (err) => {
     if (err)
       return res.status(500).send(err);
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
   });
 
-  init();
+  setTimeout(pdfstuff, 5000);
   
+  res.sendFile(__dirname + '/uploads/out.pdf');
+});
+
+// Server listener
+const listener = app.listen(process.env.PORT, () => {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
+
+function pdfstuff() {
   var fileToRun = 'current.pdf';
   var pdfReader = hummus.createReader(fileToRun);
 
@@ -95,22 +104,4 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
       pageModifier.endContext().writePage();
   }
   pdfWriter.end();
-  res.sendFile(__dirname + '/uploads/out.pdf');
-});
-
-// Server listener
-const listener = app.listen(process.env.PORT, () => {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
-
-async function init() {
-  console.log(1);
-  await sleep(1000);
-  console.log(2);
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
 }
