@@ -72,7 +72,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
   });
 
-  setTimeout(pdfstuff, 250)
+  setTimeout(pdfstuff, 1000)
   res.writeHead(301, {
   Location: `/sent`
 }).end();
@@ -95,14 +95,14 @@ function pdfstuff() {
       var pageModifier = new hummus.PDFPageModifier(pdfWriter,i);
       var cxt = pageModifier.startContext().getContext();
       pagesPlacements[i].forEach((placement)=> {
-          if (placement.text == 'i' && pagesPlacements[i][e+1].text == 'n' && pagesPlacements[i][e+2].text == 'k') {
+          if (placement.text.toLowerCase() == 'i' && pagesPlacements[i][e+1].text.toLowerCase() == 'n' && pagesPlacements[i][e+2].text.toLowerCase() == 'k') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Red',width:2})
               cxt.Q();
               run++;
             console.log('found instance of ink')
           }
-          if (pagesPlacements[i][e].text == 't' && pagesPlacements[i][e+1].text == 'o' && pagesPlacements[i][e+2].text == 'n' && pagesPlacements[i][e+3].text == 'e' && pagesPlacements[i][e+4].text == 'r') {
+          if (pagesPlacements[i][e].text.toLowerCase() == 't' && pagesPlacements[i][e+1].text.toLowerCase() == 'o' && pagesPlacements[i][e+2].text.toLowerCase() == 'n' && pagesPlacements[i][e+3].text.toLowerCase() == 'e' && pagesPlacements[i][e+4].text.toLowerCase() == 'r') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Green',width:2})
               cxt.Q();
