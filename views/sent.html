@@ -1,5 +1,8 @@
 <html>
-  <a id="thelink" href="/uploads" download>download highlighted pdf</a>
+  <h1 id="wait">
+    highlighting. please wait...
+  </h1>
+  <a id="thelink" href="/uploads" download>click to download highlighted pdf</a>
 </html>
 
 <style>
@@ -16,6 +19,7 @@
   let link = document.getElementById('thelink');
   setTimeout(function() {
     link.style.display = 'block'
-  }, 1200);
+    document.getElementById('wait').style.display = 'none';
+  }, 2000);
 
 </script>
