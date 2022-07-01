@@ -68,7 +68,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   });
 
   
-  var fileToRun = 'current.pdf';
+  var fileToRun = `${upload_folder}/current.pdf`;
   var pdfReader = hummus.createReader(fileToRun);
 
   var pagesPlacements = extractText(pdfReader);
