@@ -52,9 +52,14 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
+app.get('/sent', (req, res) => {
+  res.sendFile(__dirname + '/views/sent.html');
 });
+
+app.get('/uploads', (req, res) => {
+  res.sendFile(__dirname + '/uploads/out.pdf');
+});
+
 
 // Upload post route
 app.post('/upload', upload.single('image'), validate_format, (req, res, next) => {
@@ -67,9 +72,11 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
   });
 
-  res.sendFile(__dirname + '/views/sent.html');
-  setTimeout(pdfstuff, 2000);
-  //res.sendFile(__dirname + '/uploads/out.pdf');
+  setTimeout(pdfstuff, 1000)
+  res.writeHead(301, {
+  Location: `/sent`
+}).end();
+ // res.sendFile(__dirname + '/uploads/out.pdf');
 });
 
 // Server listener
