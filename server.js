@@ -61,10 +61,8 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
     if (err)
       return res.status(500).send(err);
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
-    res.sendFile(__dirname + '/views/sent.html');
   });
-  
-  console.log('hello')
+
   
   var fileToRun = 'current.pdf';
   var pdfReader = hummus.createReader(fileToRun);
@@ -81,12 +79,14 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Red',width:2})
               cxt.Q();
               run++;
+            console.log('found instance of ink')
           }
           if (pagesPlacements[i][e].text == 't' && pagesPlacements[i][e+1].text == 'o' && pagesPlacements[i][e+2].text == 'n' && pagesPlacements[i][e+3].text == 'e' && pagesPlacements[i][e+4].text == 'r') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Green',width:2})
               cxt.Q();
               run++;
+            console.log('found instance of toner')
           }
           e++;
       });
@@ -94,6 +94,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
       pageModifier.endContext().writePage();
   }
   pdfWriter.end();
+  res.sendFile(__dirname + '/uploads/out.pdf');
 });
 
 // Server listener
