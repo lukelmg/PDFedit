@@ -13,7 +13,7 @@ const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
 modifyPdf();
 
 async function modifyPdf() {
-      const url = 'https://odtruckreport.glitch.me/uploaded/current.pdf'
+      const url = 'https://steady-blossom-anorak.glitch.me/uploaded/current.pdf'
       
   	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
@@ -27,7 +27,6 @@ async function modifyPdf() {
       const pages = pdfDoc.getPages()
       const firstPage = pages[0]
       
-      console.log(pdfDoc.getKeywords())
 
       // Get the width and height of the first page
       const { width, height } = firstPage.getSize()

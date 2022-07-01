@@ -1,7 +1,9 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const multer = require('multer');
-const fileType = require('file-type');
+
+var hummus = require('hummus');
+var extractText = require('./lib/text-extraction');
 
 const app = express();
 
@@ -39,9 +41,6 @@ function validate_format(req, res, next) {
   };
 
   // Image/mime validation
-  let mime = fileType(req.files.image.data);
-  if(!mime || !accepted_extensions.includes(mime.ext))
-    return next(res.status(500).send('The uploaded file is not in ' + accepted_extensions.join(", ") + ' format!'));
   next();
 }
 
@@ -53,14 +52,12 @@ app.get('/', (req, res) => {
 // Upload post route
 app.post('/upload', upload.single('image'), validate_format, (req, res, next) => {
   let upFile = req.files.image;
-  let mime = fileType(req.files.image.data);
-  console.log(mime.ext)
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`${upload_folder}/current.${mime.ext}`, (err) => {
+  upFile.mv(`${upload_folder}/current.pdf`, (err) => {
     if (err)
       return res.status(500).send(err);
-    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.${mime.ext}"><img src="/uploaded/${upFile.md5}.${mime.ext}"><br>Make sure to copy and share the link!</a>`;
+    let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
     res.sendFile(__dirname + '/views/sent.html');
   });
 });
