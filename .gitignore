@@ -4,3 +4,6 @@ tmp
 .glitch-assets
 .readme.md.swp
 shrinkwrap.yaml
+current.pdf
+views/out.pdf
+views/current.pdf
