@@ -95,19 +95,20 @@ function pdfstuff() {
       var pageModifier = new hummus.PDFPageModifier(pdfWriter,i);
       var cxt = pageModifier.startContext().getContext();
       pagesPlacements[i].forEach((placement)=> {
-          if (placement.text.toLowerCase() == 'i' && pagesPlacements[i][e+1].text.toLowerCase() == 'n' && pagesPlacements[i][e+2].text.toLowerCase() == 'k') {
+        console.log(placement.text)
+          if (placement.text.toLowerCase() == 'i' && pagesPlacements[i][e+1].text.toLowerCase() == 'n' && pagesPlacements[i][e+2].text.toLowerCase() == 'k' || placement.text.toLowerCase().includes('ink') == true) {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Green',width:2})
               cxt.Q();
               run++;
-            console.log('found instance of ink')
+            //console.log('found instance of ink')
           }
-          if (pagesPlacements[i][e].text.toLowerCase() == 't' && pagesPlacements[i][e+1].text.toLowerCase() == 'o' && pagesPlacements[i][e+2].text.toLowerCase() == 'n' && pagesPlacements[i][e+3].text.toLowerCase() == 'e' && pagesPlacements[i][e+4].text.toLowerCase() == 'r') {
+          if (pagesPlacements[i][e].text.toLowerCase() == 't' && pagesPlacements[i][e+1].text.toLowerCase() == 'o' && pagesPlacements[i][e+2].text.toLowerCase() == 'n' && pagesPlacements[i][e+3].text.toLowerCase() == 'e' && pagesPlacements[i][e+4].text.toLowerCase() == 'r'|| placement.text.toLowerCase() == 'toner') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Red',width:2})
               cxt.Q();
               run++;
-            console.log('found instance of toner')
+            //console.log('found instance of toner')
           }
           e++;
       });
