@@ -12,6 +12,7 @@ var e = 0;
 
 /* CONFIG */
 const accepted_extensions = ['pdf'];
+const upload_folder = 'uploads';
 
 app.use(express.static('public'));
 app.use('/uploaded', express.static(upload_folder));
@@ -56,7 +57,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   let upFile = req.files.image;
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`current.pdf`, (err) => {
+  upFile.mv(`${upload_folder}/current.pdf`, (err) => {
     if (err)
       return res.status(500).send(err);
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
@@ -70,7 +71,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
 
   var pagesPlacements = extractText(pdfReader);
 
-  var pdfWriter = hummus.createWriterToModify(fileToRun,{modifiedFilePath:'out.pdf'});
+  var pdfWriter = hummus.createWriterToModify(fileToRun,{modifiedFilePath:'./uploads/out.pdf'});
   for(var i=0;i<pagesPlacements.length;++i) {
       var pageModifier = new hummus.PDFPageModifier(pdfWriter,i);
       var cxt = pageModifier.startContext().getContext();
