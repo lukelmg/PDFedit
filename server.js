@@ -54,6 +54,7 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('image'), validate_format, (req, res, next) => {
   let upFile = req.files.image;
   let mime = fileType(req.files.image.data);
+  console.log(mime.ext)
   
   // Use the mv() method to place the file somewhere on your server
   upFile.mv(`${upload_folder}/current.${mime.ext}`, (err) => {
