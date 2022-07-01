@@ -72,7 +72,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
   });
 
-  setTimeout(pdfstuff, 1000)
+  setTimeout(pdfstuff, 250)
   res.writeHead(301, {
   Location: `/sent`
 }).end();
