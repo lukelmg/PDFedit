@@ -1,7 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const multer = require('multer');
-var fs = require('fs');
 
 var hummus = require('hummus');
 var extractText = require('./lib/text-extraction');
@@ -57,9 +56,6 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('image'), validate_format, (req, res, next) => {
   let upFile = req.files.image;
   
-  //fs.unlinkSync(`${upload_folder}/current.pdf`);
-  //fs.unlinkSync(`${upload_folder}/out.pdf`);
-  
   // Use the mv() method to place the file somewhere on your server
   upFile.mv(`${upload_folder}/current.pdf`, (err) => {
     if (err)
@@ -68,7 +64,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   });
 
   
-  var fileToRun = `${upload_folder}/current.pdf`;
+  var fileToRun = 'current.pdf';
   var pdfReader = hummus.createReader(fileToRun);
 
   var pagesPlacements = extractText(pdfReader);
