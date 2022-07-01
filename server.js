@@ -7,9 +7,11 @@ var extractText = require('./lib/text-extraction');
 
 const app = express();
 
+var run  = 0;
+var e = 0;
+
 /* CONFIG */
 const accepted_extensions = ['pdf'];
-const upload_folder = 'tmp';
 
 app.use(express.static('public'));
 app.use('/uploaded', express.static(upload_folder));
@@ -54,12 +56,43 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
   let upFile = req.files.image;
   
   // Use the mv() method to place the file somewhere on your server
-  upFile.mv(`${upload_folder}/current.pdf`, (err) => {
+  upFile.mv(`current.pdf`, (err) => {
     if (err)
       return res.status(500).send(err);
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
     res.sendFile(__dirname + '/views/sent.html');
   });
+  
+  console.log('hello')
+  
+  var fileToRun = 'current.pdf';
+  var pdfReader = hummus.createReader(fileToRun);
+
+  var pagesPlacements = extractText(pdfReader);
+
+  var pdfWriter = hummus.createWriterToModify(fileToRun,{modifiedFilePath:'out.pdf'});
+  for(var i=0;i<pagesPlacements.length;++i) {
+      var pageModifier = new hummus.PDFPageModifier(pdfWriter,i);
+      var cxt = pageModifier.startContext().getContext();
+      pagesPlacements[i].forEach((placement)=> {
+          if (placement.text == 'i' && pagesPlacements[i][e+1].text == 'n' && pagesPlacements[i][e+2].text == 'k') {
+              cxt.q();
+              cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Red',width:2})
+              cxt.Q();
+              run++;
+          }
+          if (pagesPlacements[i][e].text == 't' && pagesPlacements[i][e+1].text == 'o' && pagesPlacements[i][e+2].text == 'n' && pagesPlacements[i][e+3].text == 'e' && pagesPlacements[i][e+4].text == 'r') {
+              cxt.q();
+              cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Green',width:2})
+              cxt.Q();
+              run++;
+          }
+          e++;
+      });
+      e = 0;
+      pageModifier.endContext().writePage();
+  }
+  pdfWriter.end();
 });
 
 // Server listener
