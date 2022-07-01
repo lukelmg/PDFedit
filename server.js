@@ -63,6 +63,7 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
     let html = `<!DOCTYPE html>Upload completed. Here's your image:<br><a href="/uploaded/current.pdf"><img src="/uploaded/${upFile.md5}.pdf"><br>Make sure to copy and share the link!</a>`;
   });
 
+  init();
   
   var fileToRun = 'current.pdf';
   var pdfReader = hummus.createReader(fileToRun);
@@ -101,3 +102,15 @@ app.post('/upload', upload.single('image'), validate_format, (req, res, next) =>
 const listener = app.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+async function init() {
+  console.log(1);
+  await sleep(1000);
+  console.log(2);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
