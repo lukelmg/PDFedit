@@ -96,19 +96,35 @@ function pdfstuff() {
       var cxt = pageModifier.startContext().getContext();
       pagesPlacements[i].forEach((placement)=> {
         console.log(placement.text)
-          if (placement.text.toLowerCase() == 'i' && pagesPlacements[i][e+1].text.toLowerCase() == 'n' && pagesPlacements[i][e+2].text.toLowerCase() == 'k' || placement.text.toLowerCase().includes('ink') == true) {
+          if (placement.text.toLowerCase() == 'i' && pagesPlacements[i][e+1].text.toLowerCase() == 'n' && pagesPlacements[i][e+2].text.toLowerCase() == 'k') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Green',width:2})
               cxt.Q();
               run++;
             //console.log('found instance of ink')
           }
-          if (pagesPlacements[i][e].text.toLowerCase() == 't' && pagesPlacements[i][e+1].text.toLowerCase() == 'o' && pagesPlacements[i][e+2].text.toLowerCase() == 'n' && pagesPlacements[i][e+3].text.toLowerCase() == 'e' && pagesPlacements[i][e+4].text.toLowerCase() == 'r'|| placement.text.toLowerCase() == 'toner') {
+        
+          if (placement.text.toLowerCase().includes('ink') == true) {
+            cxt.q();
+            cxt.cm.apply(cxt,placement.matrix);
+            cxt.drawRectangle(placement.localBBox[0],placement.localBBox[1],placement.localBBox[2]-placement.localBBox[0],placement.localBBox[3]-placement.localBBox[1],{color:'Green',width:2});
+            cxt.Q();
+          }
+        
+        
+          if (pagesPlacements[i][e].text.toLowerCase() == 't' && pagesPlacements[i][e+1].text.toLowerCase() == 'o' && pagesPlacements[i][e+2].text.toLowerCase() == 'n' && pagesPlacements[i][e+3].text.toLowerCase() == 'e' && pagesPlacements[i][e+4].text.toLowerCase() == 'r') {
               cxt.q();
               cxt.drawRectangle(placement.matrix[4]-2, 782-placement.matrix[5], 30, 12,{color:'Red',width:2})
               cxt.Q();
               run++;
             //console.log('found instance of toner')
+          }
+        
+          if (placement.text.toLowerCase().includes('toner') == true) {
+            cxt.q();
+            cxt.cm.apply(cxt,placement.matrix);
+            cxt.drawRectangle(placement.localBBox[0],placement.localBBox[1],placement.localBBox[2]-placement.localBBox[0],placement.localBBox[3]-placement.localBBox[1],{color:'Red',width:2});
+            cxt.Q();
           }
           e++;
       });
